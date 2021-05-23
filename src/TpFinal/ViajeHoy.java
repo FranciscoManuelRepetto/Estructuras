@@ -9,13 +9,13 @@ package TpFinal;
  *
  * @author repetto.francisco
  */
-public class VueloHoy {
+public class ViajeHoy {
     
     private String fecha;
     private int cantAsTotales;
     private int cantAsVendidos;
 
-    public VueloHoy(String fecha, int cantAsTotales) {
+    public ViajeHoy(String fecha, int cantAsTotales) {
         this.fecha = fecha;
         this.cantAsTotales = cantAsTotales;
         this.cantAsVendidos = 0;
