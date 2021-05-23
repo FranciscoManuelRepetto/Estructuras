@@ -5,6 +5,8 @@
  */
 package TpFinal;
 
+import java.util.Objects;
+
 /**
  *
  * @author repetto.francisco
@@ -35,6 +37,16 @@ public class Aeropuerto {
 
     public void setNumTelefono(int numTelefono) {
         this.numTelefono = numTelefono;
+    }
+    
+    public boolean equals(Object unAeropuerto){
+        boolean esIgual = false;
+        Aeropuerto aux = (Aeropuerto) unAeropuerto;
+        if(this.nomAeronautico.equals(aux.nomAeronautico)&&this.ciudad.equals(aux.ciudad)
+            && this.numTelefono == aux.numTelefono){
+            esIgual = true;
+        }
+         return esIgual;   
     }
     
 }

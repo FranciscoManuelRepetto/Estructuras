@@ -5,16 +5,18 @@
  */
 package TpFinal;
 
+import java.util.Objects;
+
 /**
  *
  * @author repetto.francisco
  */
-public class ClaveCliente {
+public class ClaveCliente implements Comparable {
 
     private String tipo;
-    private int numDni;
+    private String numDni;
 
-    public ClaveCliente(String tipo, int numeroDni) {
+    public ClaveCliente(String tipo, String numeroDni) {
         this.tipo = tipo;
         this.numDni = numeroDni;
     }
@@ -23,27 +25,51 @@ public class ClaveCliente {
         return tipo;
     }
 
-    public int getNumDni() {
+    public String getNumDni() {
         return numDni;
     }
 
+    @Override
     public int compareTo(Object obj) {
         //se compara tomando en primer lugar el tipo y luego el numero de dni
-        int resultado;
         ClaveCliente clave = (ClaveCliente) obj;
-        if (this.tipo.compareTo(clave.tipo) < 0) {
-            resultado = -1;
-        } else if (this.tipo.compareTo(clave.tipo) > 0) {
-            resultado = 1;
-        } else // el tipo es igual, se compara el dni
-        if (this.numDni < clave.numDni) {
-            resultado = -2;
-        } else if (this.numDni > clave.numDni) {
-            resultado = 2;
-        } else {
-            resultado = 0;
-        }
+        int resultado = this.tipo.compareTo(clave.tipo);
+        if(resultado == 0)
+            resultado = this.numDni.compareTo(clave.numDni);
         return resultado;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.tipo);
+        hash = 29 * hash + Objects.hashCode(this.numDni);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ClaveCliente other = (ClaveCliente) obj;
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
+        if (!Objects.equals(this.numDni, other.numDni)) {
+            return false;
+        }
+        return true;
+    }
+
+
+    
+    
 
 }
