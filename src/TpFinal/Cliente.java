@@ -5,6 +5,8 @@
  */
 package TpFinal;
 
+import Liniales.dinamica.Lista;
+
 /**
  *
  * @author repetto.francisco
@@ -16,17 +18,18 @@ public class Cliente {
     private String apellido;
     private String fechaNacimiento;
     private String domicilio;
-    private int numTelefono;
+    private long numTelefono;
     
-    public Cliente(String tipo, String numDni,String nombre, String apellido, String fechaNacimiento, String domicilio, int numTelefono) {
-        this.clave = new ClaveCliente(tipo,numDni);
+    public Cliente(ClaveCliente clave,String nombre, String apellido, String fechaNacimiento, 
+            String domicilio, long numTelefono) {
+        this.clave = clave;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.domicilio = domicilio;
         this.numTelefono = numTelefono;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
@@ -43,7 +46,7 @@ public class Cliente {
         return domicilio;
     }
 
-    public int getNumTelefono() {
+    public long getNumTelefono() {
         return numTelefono;
     }
 
@@ -54,20 +57,28 @@ public class Cliente {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-
-    public void setFechaNacimiento(String fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
+    
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
 
-    public void setNumTelefono(int numTelefono) {
+    public void setNumTelefono(long numTelefono) {
         this.numTelefono = numTelefono;
     }
     
+    public boolean equals(Cliente cliente){
+        return clave.equals(cliente.clave);
+    }
     
+    public String toString(){
+        String aux =    "Tipo Documento: "+this.clave.getTipo()+"\n"+
+                        "DNI: "+this.clave.getNumDni()+"\n"+
+                        "Nombre: "+this.nombre+"\n"+
+                        "Apellido: "+this.apellido+"\n"+
+                        "Domicilio: "+this.domicilio+"\n"+
+                        "Fecha Nacimiento: "+this.fechaNacimiento+"\n";
+        return aux;
+    }
     
 
 }

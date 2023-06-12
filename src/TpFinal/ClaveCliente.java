@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author repetto.francisco
  */
 public class ClaveCliente implements Comparable {
-
+    
     private String tipo;
     private String numDni;
 
@@ -33,9 +33,9 @@ public class ClaveCliente implements Comparable {
     public int compareTo(Object obj) {
         //se compara tomando en primer lugar el tipo y luego el numero de dni
         ClaveCliente clave = (ClaveCliente) obj;
-        int resultado = this.tipo.compareTo(clave.tipo);
+        int resultado = this.tipo.compareTo(clave.getTipo());
         if(resultado == 0)
-            resultado = this.numDni.compareTo(clave.numDni);
+            resultado = this.numDni.compareTo(clave.getNumDni());
         return resultado;
     }
 
@@ -45,6 +45,13 @@ public class ClaveCliente implements Comparable {
         hash = 29 * hash + Objects.hashCode(this.tipo);
         hash = 29 * hash + Objects.hashCode(this.numDni);
         return hash;
+    }
+
+    @Override
+
+    
+    public String toString(){
+        return tipo+" "+numDni+" ";
     }
 
     @Override
@@ -67,9 +74,8 @@ public class ClaveCliente implements Comparable {
         }
         return true;
     }
-
-
-    
-    
-
 }
+
+
+    
+  

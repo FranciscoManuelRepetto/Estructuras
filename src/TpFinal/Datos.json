@@ -1,0 +1,323 @@
+{
+    "Aeropuerto":
+        [
+            {
+                "nomAeronautico": "NQN",
+                "ciudad":"Neuquen",
+                "numTelefono":2994865787
+            },
+            {
+                "nomAeronautico": "AEP",
+                "ciudad":"Aeroparque de la Ciudad de Buenos Aires",
+                "numTelefono":1198785231
+            },
+            {
+                "nomAeronautico": "SAL",
+                "ciudad":"Salta",
+                "numTelefono":5423548946
+            },
+            {
+                "nomAeronautico": "ATF",
+                "ciudad":"Tierra del Fuego",
+                "numTelefono":8942314684
+            },
+            {
+                "nomAeronautico": "COR",
+                "ciudad":"Cordoba",
+                "numTelefono":7895241052
+            },
+            {
+                "nomAeronautico": "MEN",
+                "ciudad":"Mendoza",
+                "numTelefono":2994865787
+            },
+            {
+                "nomAeronautico": "MIS",
+                "ciudad":"Misiones",
+                "numTelefono":33459885555
+            }
+        ],
+    "Vuelo":
+        [
+            {
+                "claveVuelo": "AA2145",
+                "origen":"NQN",
+                "destino":"AEP",
+                "horaSalida":"19:00",
+                "horaLlegada":"20:30"
+            },
+            {
+                "claveVuelo": "AA3334",
+                "origen":"AEP",
+                "destino":"NQN",
+                "horaLlegada":"16:30",
+                "horaSalida":"15:00"
+            },
+            {
+                "claveVuelo": "JS8594",
+                "origen":"AEP",
+                "destino":"MIS",
+                "horaLlegada":"13:30",
+                "horaSalida":"12:00"
+            },
+            {
+                "claveVuelo": "JS8324",
+                "origen":"MIS",
+                "destino":"AEP",
+                "horaLlegada":"18:30",
+                "horaSalida":"17:00"
+            },
+            {
+                "claveVuelo": "AA6982",
+                "origen":"COR",
+                "destino":"SAL",
+                "horaLlegada":"13:35",
+                "horaSalida":"12:00"
+            },
+            {
+                "claveVuelo": "AA7878",
+                "origen":"SAL",
+                "destino":"COR",
+                "horaLlegada":"17:35",
+                "horaSalida":"16:00"
+            },
+            {
+                "claveVuelo": "AA6252",
+                "origen":"NQN",
+                "destino":"COR",
+                "horaLlegada":"13:50",
+                "horaSalida":"12:00"
+            },
+            {
+                "claveVuelo": "AA1111",
+                "origen":"COR",
+                "destino":"NQN",
+                "horaLlegada":"17:50",
+                "horaSalida":"16:00"
+            },
+            {
+                "claveVuelo": "LA2222",
+                "origen": "AEP",
+                "destino": "ATF",
+                "horaLlegada": "12:30",
+                "horaSalida": "09:00"
+            },
+            {
+                "claveVuelo": "LA9878",
+                "origen": "ATF",
+                "destino": "AEP",
+                "horaLlegada": "18:30",
+                "horaSalida": "15:00"
+            },
+            
+            {
+                "claveVuelo": "JS7887",
+                "origen": "AEP",
+                "destino": "COR",
+                "horaLlegada": "16:15",
+                "horaSalida": "15:00"
+            }
+        ],
+   "VueloHoy":
+        [
+            {
+                "vuelo":"AA2145",
+                "fecha":"02/05/2019",
+                "cantAsTotales":118,
+                "cantAsVendidos":2
+            },
+            {
+                "vuelo":"LA2222",
+                "fecha":"03/05/2019",
+                "cantAsTotales":99,
+                "cantAsVendidos": 1
+            },
+            {
+                "vuelo":"AA7878",
+                "fecha":"07/06/2022",
+                "cantAsTotales":99,
+                "cantAsVendidos": 1
+            },
+            {
+                "vuelo":"AA1111",
+                "fecha":"07/09/2022",
+                "cantAsTotales":119,
+                "cantAsVendidos":1
+            },
+            {
+                "vuelo":"JS8324",
+                "fecha":"07/09/2022",
+                "cantAsTotales":89,
+                "cantAsVendidos":1
+            },
+            {
+                "vuelo":"JS8594",
+                "fecha":"12/09/2022",
+                "cantAsTotales":89,
+                "cantAsVendidos": 1
+            },
+            {
+                "vuelo":"AA6252",
+                "fecha":"08/05/2022",
+                "cantAsTotales":118,
+                "cantAsVendidos": 2
+            },
+            {
+                "vuelo":"AA6982",
+                "fecha":"20/06/2022",
+                "cantAsTotales":119,
+                "cantAsVendidos": 1
+            },
+            {
+                "vuelo":"AA2145",
+                "fecha":"06/07/2019",
+                "cantAsTotales":119,
+                "cantAsVendidos": 1
+            },
+            {
+                "vuelo":"AA2145",
+                "fecha":"05/07/2019",
+                "cantAsTotales":120,
+                "cantAsVendidos": 0
+            }
+        ],
+    "Cliente":
+        [
+            {
+                "tipoDni":"DNI",
+                "dni":"1",
+                "nombre":"nombre1",
+                "apellido":"apellido1",
+                "fechaNacimiento":"01/01/2000",
+                "domicilio":"calle1",
+                "numTelefono":154654
+            },
+            {
+                "tipoDni":"DNI",
+                "dni":"2",
+                "nombre":"nombre2",
+                "apellido":"apellido2",
+                "fechaNacimiento":"15/08/1985",
+                "domicilio":"calle2",
+                "numTelefono":152346
+            },
+            {
+                "tipoDni":"Pasaporte",
+                "dni":"3",
+                "nombre":"nombre3",
+                "apellido":"apellido3",
+                "fechaNacimiento":"01/01/1971",
+                "domicilio":"calle3",
+                "numTelefono":1587978
+            },
+            {
+                "tipoDni":"Carnet de Extranjeria",
+                "dni":"4",
+                "nombre":"nombre4",
+                "apellido":"apellido4",
+                "fechaNacimiento":"01/01/1962",
+                "domicilio":"calle4",
+                "numTelefono":1587979
+            },
+            {
+                "tipoDni":"DNI",
+                "dni":"5",
+                "nombre":"nombre1",
+                "apellido":"apellido1",
+                "fechaNacimiento":"01/01/2000",
+                "domicilio":"calle1",
+                "numTelefono":154654
+            }  
+        ],
+    "Pasaje":
+        [
+            {
+                "vuelo":"AA2145",
+                "tipoDni":"DNI",
+                "dni":"1",
+                "fecha":"02/05/2019",
+                "numAsiento":"45",
+                "estado":"Volado"
+            },
+            {
+                "vuelo":"LA2222",
+                "tipoDni":"DNI",
+                "dni":"1",
+                "fecha":"03/05/2019",
+                "numAsiento":"12",
+                "estado":"Volado"
+            },
+            {
+                "vuelo":"AA7878",
+                "tipoDni":"DNI",
+                "dni":"2",
+                "fecha":"06/06/2022",
+                "numAsiento":"2",
+                "estado":"Cancelado"
+            },
+            {
+                "vuelo":"AA7878",
+                "tipoDni":"DNI",
+                "dni":"2",
+                "fecha":"07/06/2022",
+                "numAsiento":"2",
+                "estado":"Volado"
+            },
+            {
+                "vuelo":"AA1111",
+                "tipoDni":"DNI",
+                "dni":"2",
+                "fecha":"07/09/2022",
+                "numAsiento":"2",
+                "estado":"Pendiente"
+            },
+            {
+                "vuelo":"JS8324",
+                "tipoDni":"Pasaporte",
+                "dni":"3",
+                "fecha":"07/09/2022",
+                "numAsiento":"21",
+                "estado":"Pendiente"
+            },
+            {
+                "vuelo":"JS8594",
+                "tipoDni":"Pasaporte",
+                "dni":"3",
+                "fecha":"12/09/2022",
+                "numAsiento":"23",
+                "estado":"Pendiente"
+            },
+            {
+                "vuelo":"AA6252",
+                "tipoDni":"Carnet de Extranjeria",
+                "dni":"4",
+                "fecha":"08/08/2022",
+                "numAsiento":"89",
+                "estado":"Cancelado"
+            },
+            {
+                "vuelo":"AA2145",
+                "tipoDni":"DNI",
+                "dni":"5",
+                "fecha":"02/05/2019",
+                "numAsiento":"50",
+                "estado":"Volado"
+            },
+            {
+                "vuelo":"AA6252",
+                "tipoDni":"DNI",
+                "dni":"5",
+                "fecha":"08/05/2022",
+                "numAsiento":"45",
+                "estado":"Volado"
+            },
+            {
+                "vuelo":"AA6982",
+                "tipoDni":"DNI",
+                "dni":"5",
+                "fecha":"20/06/2022",
+                "numAsiento":"9",
+                "estado":"Volado"
+            }
+        ]
+}

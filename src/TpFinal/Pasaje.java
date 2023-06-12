@@ -13,14 +13,22 @@ public class Pasaje {
     
     private Vuelo vuelo;
     private String fecha;
-    private int numAsiento;
+    private String numAsiento;
     private String estado;
 
-    public Pasaje(Vuelo vuelo, String fecha, int numAsiento, String estado) {
+    public Pasaje(Vuelo vuelo, String fecha, String numAsiento,String estado) {
+        /*Solo para la carga de datos*/
         this.vuelo = vuelo;
         this.fecha = fecha;
         this.numAsiento = numAsiento;
         this.estado = estado;
+    }
+    
+    public Pasaje(Vuelo vuelo, String fecha, String numAsiento) {
+        this.vuelo = vuelo;
+        this.fecha = fecha;
+        this.numAsiento = numAsiento;
+        this.estado = "Pendiente";
     }
 
     public Vuelo getVuelo() {
@@ -31,7 +39,7 @@ public class Pasaje {
         return fecha;
     }
 
-    public int getNumAsiento() {
+    public String getNumAsiento() {
         return numAsiento;
     }
 
@@ -43,14 +51,21 @@ public class Pasaje {
         this.fecha = fecha;
     }
 
-    public void setNumAsiento(int numAsiento) {
+    public void setNumAsiento(String numAsiento) {
         this.numAsiento = numAsiento;
     }
 
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
-    
+
+    public String toString(){
+        String info =   "\nPasaje del vuelo: "+vuelo.getClaveVuelo()+"\n"+
+                        "Hora salida: "+vuelo.getHoraSalida()+"\n"+
+                        "Hora llegada: "+vuelo.getHoraLlegada()+"\n"+
+                        "Fecha: "+fecha+"\n"+
+                        "Num Asiento: "+numAsiento+"\n"+
+                        "Estado: "+estado+"\n";
+        return info;
+    }
 }

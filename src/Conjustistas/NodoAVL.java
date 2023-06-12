@@ -64,6 +64,8 @@ public class NodoAVL {
             }else{ 
                 if(this.derecho!=null){
                     this.altura=this.derecho.getAltura()+1;
+                }else{
+                    this.altura = 0;
                 }
             }
         }

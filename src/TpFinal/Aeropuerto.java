@@ -15,9 +15,13 @@ public class Aeropuerto {
     
     private String nomAeronautico;
     private String ciudad;
-    private int numTelefono;
+    private long numTelefono;
 
-    public Aeropuerto(String nomAeronautico, String ciudad, int numTelefono) {
+    public Aeropuerto(String nomAeronautico) {
+        this.nomAeronautico = nomAeronautico;
+    }
+
+    public Aeropuerto(String nomAeronautico, String ciudad, long numTelefono) {
         this.nomAeronautico = nomAeronautico;
         this.ciudad = ciudad;
         this.numTelefono = numTelefono;
@@ -31,22 +35,27 @@ public class Aeropuerto {
         return ciudad;
     }
 
-    public int getNumTelefono() {
+    public long getNumTelefono() {
         return numTelefono;
     }
 
-    public void setNumTelefono(int numTelefono) {
+    public void setNumTelefono(long numTelefono) {
         this.numTelefono = numTelefono;
     }
     
     public boolean equals(Object unAeropuerto){
         boolean esIgual = false;
         Aeropuerto aux = (Aeropuerto) unAeropuerto;
-        if(this.nomAeronautico.equals(aux.nomAeronautico)&&this.ciudad.equals(aux.ciudad)
-            && this.numTelefono == aux.numTelefono){
+        if(this.nomAeronautico.equals(aux.nomAeronautico))
             esIgual = true;
-        }
-         return esIgual;   
+        return esIgual;   
+    }
+    
+    public String toString(){
+        String info =   "Nombre Aeronautico: "+nomAeronautico;
+//                        " Ciudad: "+ciudad+
+//                        " Numero Telefono: "+numTelefono;
+        return info;
     }
     
 }

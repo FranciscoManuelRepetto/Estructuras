@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -25,8 +25,10 @@ public class GrafoEtiquetado {
     //Operaciones basicas
     public boolean insertarVertice(Object nuevoVertice) {
         boolean exito = false;
+        /*Busca si hay algun  vertice que es igual a nuevoVertice*/
         NodoVert aux = this.ubicarVertice(nuevoVertice);
         if (aux == null) {
+            /*No hay ningun vertice que tenga al elemento nuevoVertice*/
             this.inicio = new NodoVert(nuevoVertice, this.inicio, null);
             exito = true;
 
@@ -44,22 +46,30 @@ public class GrafoEtiquetado {
     }
 
     public boolean eliminarVertice(Object elemVertice) {
-        boolean exito = false;
+        boolean exito = false, termino = false;
         NodoVert aux = null;
+        /*Verifica que el grafo no este vacio*/
         if (inicio != null) {
+            /*Si no esta vacio,lo busca y desconecta el vertice con los otros vertices*/
             aux = this.desconectarVertice(elemVertice);
         }
         if (aux != null) {
             //Si lo encuentra, le desconecta los arcos
             NodoAdy auxArco = aux.getPrimerAdy();
             //Verifica que tenga arcos
-            if (auxArco != null) {
+            while(!termino) {
                 //Primero desconecta al nodo destino al de origen asi no pierde la referencia
                 boolean desconecto = desconectarArco(auxArco.getVertice(), aux);
                 //Si lo pudo desconectar del destino al origen, entonces lo desconecta del origen al destino
                 if (desconecto) {
                     desconectarArco(aux, auxArco.getVertice());
                 }
+                /*Verifico que no tenga otros arcos*/
+                if(auxArco.getSigAdyacente()!=null)
+                    /*Si tiene otros arcos, los saca*/
+                    auxArco = auxArco.getSigAdyacente();
+                else
+                    termino = true;
             }
             exito = true;
         }
@@ -326,16 +336,15 @@ public class GrafoEtiquetado {
             if (n.getElem().equals(dest)) {
                 //si vertice n es el destino: HAY CAMINO!
                 vis.insertar(n.getElem(), vis.longitud() + 1);
-                //Verifica si la lista de visitados es la mas corta hasta ahora
-                if (masCorto.esVacia() || masCorto.longitud() > vis.longitud()) { //Como es la mas corta, la guarda
-                    masCorto = vis.clone();
-                }
+                //Verifica que el camino sea mas corto o sino se queda con el primero que encontro
+                masCorto = vis.clone();
             } else {
                 /*Si no es el destino verifica  si hay camino entre n y destino*/
                 vis.insertar(n.getElem(), vis.longitud() + 1);
                 NodoAdy ady = n.getPrimerAdy();
                 while (ady != null) {
-                    if (vis.localizar(ady.getVertice().getElem()) < 0) {
+                    if (vis.localizar(ady.getVertice().getElem()) < 0 && 
+                            (vis.longitud()+1 < masCorto.longitud() || masCorto.longitud() == 0)) {
                         masCorto = caminoMasCortoAux(ady.getVertice(), dest, vis, masCorto);
                         vis.eliminar(vis.longitud());
                     }
@@ -404,31 +413,28 @@ public class GrafoEtiquetado {
     }
 
     private Lista caminoMasCortoEtiquetasAux(NodoVert n, Object dest, Lista vis, Lista masCorto, int etiqVis) {
-        /*ACLARION: La lista masCorto guarda el camino por etiquetas mas corto en la posicion 1 y la suma
+        /*ACLARACION: La lista masCorto guarda el camino por etiquetas mas corto en la posicion 1 y la suma
             de las etiquetas lo guarda en la posicion 2*/
+         //Recupera la suma de etiquetas de la lista 
+         int i = (int) masCorto.recuperar(2);
         if (n != null) {
             //Verifica que el origen es el destino
             if (n.getElem().equals(dest)) {
                 //si vertice n es el destino: HAY CAMINO!
                 vis.insertar(n.getElem(), vis.longitud() + 1);
-                //Recupera la suma de etiquetas de la lista 
-                int i = (int) masCorto.recuperar(2);
-                //Verifica si la lista de visitados sus etiquetas suman un numero menor 
-                if ( i == 0 || i > etiqVis) { //Como es la mas corta, la guarda
-                    //Elimina la lista anterior e inserta la nueva lista
-                    masCorto.eliminar(1);
-                    masCorto.insertar(vis.clone(), 1);
-                    //Elimina la suma anterior e inserta la suma nueva 
-                    masCorto.eliminar(2);
-                    masCorto.insertar(etiqVis, 2);
-                }
+                //Elimina la lista anterior e inserta la nueva lista
+                masCorto.eliminar(1);
+                masCorto.insertar(vis.clone(), 1);
+                //Elimina la suma anterior e inserta la suma nueva 
+                masCorto.eliminar(2);
+                masCorto.insertar(etiqVis, 2);
             } else {
                 /*Si no es el destino verifica  si hay camino entre n y destino*/
                 vis.insertar(n.getElem(), vis.longitud() + 1);
                 NodoAdy ady = n.getPrimerAdy();
                 while (ady != null) {
-                    if (vis.localizar(ady.getVertice().getElem()) < 0) {
-                        etiqVis = etiqVis + ady.getEtiqueta();
+                    etiqVis = etiqVis + ady.getEtiqueta();
+                    if (vis.localizar(ady.getVertice().getElem()) < 0 && ( i == 0 || i > etiqVis)) {
                         masCorto = caminoMasCortoEtiquetasAux(ady.getVertice(), dest, vis, masCorto, etiqVis);
                         vis.eliminar(vis.longitud());
                         etiqVis = etiqVis - ady.getEtiqueta();
@@ -439,6 +445,107 @@ public class GrafoEtiquetado {
         }
         return masCorto;
     }
+    
+    public boolean existeCaminoConX(Object origen, Object destino, int x){
+        boolean existe = false;
+        /*Verifica si ambos vertices existen*/
+        NodoVert auxO = encontrarDosVertices(origen, destino);
+        if (auxO != null) {
+            /*Si ambos vertices existen busca el camino mas corto entre ambos*/
+            Lista masCorto = new Lista();
+            Lista vis = new Lista();
+            existe = existeCaminoConXAux(auxO, destino, vis,x);
+        }
+        return existe;
+    }
+    
+    private boolean existeCaminoConXAux(NodoVert n, Object dest, Lista vis, int x){
+        boolean exito = false;
+        if (n != null) {
+            if (n.getElem().equals(dest)) /*si vertice n es el destino: HAY CAMINO!*/ {
+                exito = true;
+            } else {
+                /*Si no es el destino verifica  si hay camino entre n y destino*/
+                vis.insertar(n.getElem(), vis.longitud() + 1);
+                NodoAdy ady = n.getPrimerAdy();
+                while (!exito && ady != null) {
+                    if (vis.localizar(ady.getVertice().getElem()) < 0 && vis.longitud()< x) {
+                        exito = existeCaminoConXAux(ady.getVertice(), dest, vis,x);
+                    }
+                    ady = ady.getSigAdyacente();
+                }
+            }
+        }
+        return exito;
+    }
+
+    public Lista caminoTresVertices(Object origen, Object destino, Object medio) {
+        Lista list = new Lista();
+        /*Verifico que existan los vertices*/
+        NodoVert aux = encontrarTresVertices(origen, destino, medio);
+        if (aux != null) {
+            list = caminoTresVerticesAux(aux, destino, medio, false, new Lista(), new Lista());
+        }
+        return list;
+    }
+
+    private NodoVert encontrarTresVertices(Object origen, Object destino, Object medio) {
+        /*Metodo que verifica si existen tres vertices, y retorna 
+            vertice origen si encuentra los tres*/
+ /*Existe el encontrar dos vertices pero cree este para que haga un solo recorrido*/
+        NodoVert auxO = null, auxD = null, auxM = null;
+        NodoVert aux = this.inicio;
+        //Busca los tres vertices
+        while ((auxO == null || auxD == null || auxM == null) && aux != null) {
+            if (aux.getElem().equals(origen)) {
+                auxO = aux;
+            }
+            if (aux.getElem().equals(destino)) {
+                auxD = aux;
+            }
+            if (aux.getElem().equals(medio)) {
+                auxM = aux;
+            }
+            aux = aux.getSigVertice();
+        }
+        if (auxO == null || auxD == null || auxM == null) {
+            auxO = null;
+        }
+        return auxO;
+    }
+
+    private Lista caminoTresVerticesAux(NodoVert n, Object destino, Object medio, boolean pasoMedio, Lista vis, Lista masCorto) {
+        if (n != null) {
+            //Verifica que el origen es el destino
+            if (n.getElem().equals(destino)) {
+                //Lo inserta igual pase o no pase por el medio porque despues saca para buscar otros caminos
+                vis.insertar(n.getElem(), vis.longitud() + 1);
+                if(pasoMedio){
+                //si vertice n es el destino y ya paso por medio: HAY CAMINO!
+                masCorto = vis.clone();
+                }
+            } else {
+                /*Si no es el destino verifica  si hay camino entre n y destino*/
+                vis.insertar(n.getElem(), vis.longitud() + 1);
+                if (n.getElem().equals(medio)){
+                    pasoMedio = true;
+                }
+                NodoAdy ady = n.getPrimerAdy();
+                while (ady != null) {
+                    //Verifica si la lista de visitados es mas corta hasta ahora y si no se repitio ningun nodo
+                    if (vis.localizar(ady.getVertice().getElem()) < 0 && 
+                            ((masCorto.esVacia() || masCorto.longitud() > vis.longitud()+1))) {
+                        masCorto = caminoTresVerticesAux(ady.getVertice(), destino,medio,pasoMedio, vis, masCorto);
+                        vis.eliminar(vis.longitud());
+                    }
+                    ady = ady.getSigAdyacente();
+                }
+            }
+        }
+        return masCorto;
+    }
+    
+    
 
     public void vaciar() {
         this.inicio = null;
@@ -498,26 +605,129 @@ public class GrafoEtiquetado {
             auxOrig = auxOrig.getSigVertice();
         }
     }
+    
+    public Object buscarElem(Object elem){
+        /*Busca en el grafo si existe un elemento igual a elem, 
+        si encuentra uno devuelve el que esta en el grafo*/
+        NodoVert aux = this.ubicarVertice(elem);
+        Object objeto = null;
+        if(aux != null){
+            objeto = this.ubicarVertice(elem).getElem();
+        }
+        return objeto;
+    }
 
     public String toString() {
         String grafo = "";
         NodoVert aux = this.inicio;
-        grafo = grafo + "VERTICE" + "     ADYACENTE" + "     ETIQUETA" + "\n";
         while (aux != null) {
-            grafo = grafo + aux.getElem() + "     \t";
+            grafo += "VERTICE: \n\t"+ aux.getElem()+"\n";
             NodoAdy auxArco = aux.getPrimerAdy();
+            grafo += "ADYACENTE: " + "\n\t";
             while (auxArco != null) {
-                grafo = grafo + auxArco.getVertice().getElem() + "\t    ";
-                grafo = grafo + auxArco.getEtiqueta();
+                grafo += auxArco.getVertice().getElem();
+                grafo += "\tETIQUETA: "+auxArco.getEtiqueta();
                 auxArco = auxArco.getSigAdyacente();
                 if (auxArco != null) {
-                    grafo = grafo + "\n " + "\t\t";
+                    grafo += "\n\t";
                 }
             }
-            grafo = grafo + "\n";
+            grafo += "\n";
             aux = aux.getSigVertice();
         }
         return grafo;
     }
+    
+    
+    //PRACTICANDO PARA EL FINAL
+    
+    /* Recibe dos vertices y dos cantidades numericas y devuelve el primer camino sin ciclos,
+    de origen a destino, con peso > pesoMin y cantidad de vertices < longMax*/
+    
+    public Lista primerCaminoMenorPesoLong(Object origen,Object destino,int pesoMin, int longMax){
+        Lista list = new Lista();
+        if(inicio!=null){
+            NodoVert  ori = encontrarOrigen(origen);
+            if(ori!=null){
+                list = primerCaminoMenorPesoLongAux(ori,destino,pesoMin,longMax,new Lista(),new Lista(),0);
+            }
+        }
+        return list;
+    }
+    
+    private NodoVert encontrarOrigen(Object origen){
+        NodoVert auxO = null;
+        NodoVert aux = this.inicio;
+        while(aux !=null && auxO==null){
+            if(aux.getElem().equals(origen)){
+                auxO = aux;
+            }
+            aux = aux.getSigVertice();
+        }
+        return auxO;
+    }
+   
+   private Lista primerCaminoMenorPesoLongAux(NodoVert n,Object destino,int pesoMin,int longMax, Lista vis,Lista caminoMasLargo, int peso){
+       if(n!=null){
+         vis.insertar(n.getElem(),vis.longitud()+1);
+         if(n.getElem().equals(destino)){
+            if(peso > pesoMin){
+                caminoMasLargo = vis.clone();
+            }
+         }else{
+             if(vis.longitud()<longMax){
+                 NodoAdy aux = n.getPrimerAdy();
+                 while(aux!=null && caminoMasLargo.esVacia()){
+                     if(vis.localizar(aux.getVertice().getElem())<0){
+                        peso +=aux.getEtiqueta();
+                        caminoMasLargo = primerCaminoMenorPesoLongAux(aux.getVertice(),destino,pesoMin,longMax,vis,caminoMasLargo,peso);
+                     }
+                     aux = aux.getSigAdyacente();
+                 }
+             }
+         }
+       }
+       return caminoMasLargo;
+   } 
 
+   
+   
+   /*Recibe dos vértices y dos cantidades numéricas y devuelve el primer
+camino que encuentra que sale del vértice origen y llega al vértice destino y que tenga peso (suma
+de los valores de los arcos que los unen) mayor o igual a pesoMin y menor o igual a pesoMax.
+Suponga que los dos vértices pasados por parámetro son distintos.*/
+   
+   public Lista caminoDePesoEntre(Object origen, Object destino, int pesoMin, int pesoMax){
+       Lista list = new Lista();
+       if(inicio != null){
+           NodoVert ori = encontrarOrigen(origen);
+           if(ori!=null){
+               list = caminoDePesoEntreAux(ori,destino,pesoMin,pesoMax,new Lista(),0,new Lista());
+           }
+       }
+       return list;
+   }
+   
+   private Lista caminoDePesoEntreAux(NodoVert n,Object destino,int pesoMin,int pesoMax,Lista vis, int peso,Lista caminoEncontrado){
+       if(n!=null){
+           vis.insertar(n.getElem(), vis.longitud()+1);
+           if(n.getElem().equals(destino)){
+               if(peso >= pesoMin && peso <= pesoMax){
+                   caminoEncontrado = vis.clone();
+               }
+           }else{
+               NodoAdy aux = n.getPrimerAdy();
+               while(aux!=null && caminoEncontrado.esVacia()){
+                   if(vis.localizar(aux.getVertice().getElem())<0){
+                       peso += aux.getEtiqueta();
+                       caminoEncontrado = caminoDePesoEntreAux(aux.getVertice(),destino,pesoMin,pesoMax,vis,peso,caminoEncontrado);
+                       vis.eliminar(vis.longitud());
+                       aux = aux.getSigAdyacente();
+                   }
+               }
+               
+           }
+       }
+       return caminoEncontrado;
+   }
 }

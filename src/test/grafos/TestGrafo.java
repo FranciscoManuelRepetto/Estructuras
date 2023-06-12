@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -39,17 +39,22 @@ public class TestGrafo {
         grafo.insertarVertice("B");
         grafo.insertarVertice("C");
         grafo.insertarVertice("H");
-        grafo.insertarVertice("A");
-        grafo.insertarArco("G", "E", 0);
-        grafo.insertarArco("D", "E", 0);
-        grafo.insertarArco("G", "D", 0);
-        grafo.insertarArco("B", "D", 0);
-        grafo.insertarArco("A", "C", 0);
-        grafo.insertarArco("C", "F", 0);
-        grafo.insertarArco("H", "C", 0);
+        grafo.insertarVertice("P");
+        grafo.insertarArco("G", "E", 1);
+        grafo.insertarArco("D", "E", 2);
+        grafo.insertarArco("G", "D", 3);
+        grafo.insertarArco("B", "F", 4);
+        grafo.insertarArco("P", "C", 5);
+        grafo.insertarArco("C", "F", 6);
+        grafo.insertarArco("H", "C", 7);
+        grafo.insertarArco("G", "B", 7);
+        grafo.insertarArco("P", "D", 7);
+        grafo.insertarArco("F", "P", 52);
         System.out.println(grafo.toString());
-        Lista list = grafo.listarEnAnchura("B");
-        System.out.println("Lista por anchura : "+list.toString());
+        System.out.println("Toy buscando camino mas corto de F hasta P");
+        System.out.println(grafo.caminoMasCorto("F", "P").toString());
+        System.out.println("Camino mas corto por etiquetas: "+grafo.caminoMasCortoEtiquetas("F","P").toString());
+        System.out.println("Camino mas corto pasando por un nodo: "+grafo.caminoTresVertices("F", "P", "C").toString());
         
         
     }
